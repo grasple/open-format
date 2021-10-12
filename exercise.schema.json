@@ -1,0 +1,335 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.grasple.com/v0.0.1/exercise.json",
+  "definitions": {
+    "identifier": {
+      "description": "An value which uniquely identifies this entity. Numeric for now, can become a UUID in the future",
+      "type": "integer"
+    },
+    "rich_content": {
+      "description": "The content of a field specified in HTML. Within this HTML Latex blocks can be embedded within \\(\\) blocks. Within the Latex expressions parameters can be references by name in the form of `[!<parameterName>!]`",
+      "type": "string",
+      "format": "html"
+    },
+    "i18n_rich_content": {
+      "description": "Content specified per language",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "description": "The language this content is in, specified as a IETF BCP 47 language tag",
+            "type": "string"
+          },
+          "content": {
+            "$ref": "#/definitions/rich_content"
+          }
+        }
+      }
+    },
+    "question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of this question within this exercise. Used to refer to in transitions and answer rules",
+          "$ref": "#/definitions/identifier"
+        },
+        "type": {
+          "description": "The type of the question",
+          "type": "string",
+          "enum": ["mc", "open-text", "open-number", "open-math"]
+        },
+        "description": {
+          "description": "An introduction to the question to question to show to the student",
+          "$ref": "#/definitions/i18n_rich_content"
+        },
+        "question": {
+          "description": "The question the student needs to answer",
+          "$ref": "#/definitions/i18n_rich_content"
+        },
+        "feedback_correct": {
+          "description": "The feedback to show when the user provides a correct answer without specific feedback",
+          "$ref": "#/definitions/i18n_rich_content"
+        },
+        "feedback_incorrect": {
+          "description": "The feedback to show when the user provides an incorrect answer without specific feedback",
+          "$ref": "#/definitions/i18n_rich_content"
+        },
+        "correct_question_transition_id": {
+          "description": "The question in this exercise to show when the user provides a correct answer. Only relevant for `conditional` type questions",
+          "$ref": "#/definitions/identifier"
+        },
+        "incorrect_question_transition_id": {
+          "description": "The question in this exercise to show when the user provides an incorrect answer. Only relevant for `conditional` type questions",
+          "$ref": "#/definitions/identifier"
+        },
+        "weight": {
+          "description": "The weight this question has in the calculation of the overall score for the exercise",
+          "type": "number"
+        },
+        "answers": {
+          "description": "List of answers which are either correct, or offer more specialized feedback for this question",
+          "type": "array",
+          "items": {"$ref": "#/definitions/answer"}
+        },
+        "answer_fields": {
+          "description": "List of answer fields which can be used within this question",
+          "type": "array",
+          "items": {"$ref": "#/definitions/answer_field"}
+        }
+      },
+      "required": [
+        "id", "type", "question", "answers"
+      ]
+    },
+    "answer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The unique identifier of this answer within this question",
+          "$ref": "#/definitions/identifier"
+        },
+        "display_answer": {
+          "description": "The answer to display to the student in case of a question type with pre-provided answers",
+          "$ref": "#/definitions/i18n_rich_content"
+        },
+        "feedback": {
+          "description": "The feedback to provide to the student in case this answer matches the answer given by the student",
+          "$ref": "#/definitions/i18n_rich_content"
+        },
+        "percentage_of_full_points": {
+          "description": "The percentage of points to be awarded when this answer matches the answer given by the student (between 0 and 100)",
+          "type": "integer"
+        },
+        "correct": {
+          "description": "Whether a match to this answer should be interpreted as correct, or incorrect",
+          "type": "boolean"
+        },
+        "rule_definition": {
+          "description": "The definition of how the answer given by the student should be interpreted by the system",
+          "$ref": "#/definitions/rule_definition"
+        }
+      },
+      "oneOf": [
+        {"description": "An open answer", "required": ["id", "percentage_of_full_points", "correct", "rule_definition"]},
+        {"description": "An MC answer", "required": ["id", "display_answer", "percentage_of_full_points", "correct"]}
+      ]
+    },
+    "answer_field": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique ID of this answer field within this complete _exercise_",
+          "$ref": "#/definitions/identifier"
+        },
+        "parameter_reference": {
+          "description": "The reference of this parameter which can be used within rich_content or parameter_definitions to refer to the value of this answer field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id", "parameter_reference"
+      ]
+    },
+    "rule_definition" : {
+      "type": "object",
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "A compound list of rules which all need to evaluate to a match in order for this rule to match",
+          "properties": {
+            "and": {
+              "type": "array",
+              "items": {"$ref": "#/definitions/rule_definition"}
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/rule_definition_clause"
+        }
+      ]
+    },
+    "rule_definition_clause": {
+      "type": "object",
+      "properties": {
+        "lhs": {
+          "description": "The name of the parameter to compare the expression on the right hand side to",
+          "$ref": "./content-types.schema.json#/definitions/parameter_name"
+        },
+        "relation": {
+          "description": "The relation to use in comparing the left-hand-side and right-hand-side of this rule",
+          "type": "string",
+          "enum": [
+            "normal", "exact", "ordered_collection",
+            "parallel_vector",
+            "basis", "basis_orthogonal", "basis_orthonormal",
+            "solution_soe",
+            "greater_than", "less_than", "greater_than_or_equal", "less_than_or_equal",
+            "is_numerical", "matrix_is_diagonal", "defined",
+            "text_equals", "number_equals"
+          ]
+        },
+        "rhs": {
+          "description": "The variable or expression to check the right-hand-side of this rule to",
+          "oneOf": [{"$ref": "./content-types.schema.json#/definitions/parameter_name"}, {"$ref": "./content-types.schema.json#/definitions/latex_expression"}]
+        },
+        "inverse": {
+          "description": "Whether the result of comparing the LHS and RHS with the given relation should be negated",
+          "type": "boolean"
+        },
+        "accuracy": {
+          "description": "The accurate of the 'text_equals' and 'number_equals' checks. Number between 0 and 100",
+          "type": "number"
+        }
+      },
+      "required": [
+        "lhs", "relation", "rhs", "inverse"
+      ]
+    },
+    "template": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "The type of the template",
+          "type": "string",
+          "enum": ["basic"]
+        },
+        "parameters": {
+          "description": "A parameter to be used within rich_content, latex_expressions, or question_variable. All latex_expressions used can only reference non-answer-parameters. The values for the parameters can be pre-generated.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/parameter"}
+        },
+        "answer_parameters": {
+          "description": "A parameter to be used within rich_content, latex_expressions, or question_variable. Two differences are: there are less types of parameters allowed and both types of parameters can be references within the latex_expressions. The values for the parameters should be generated when validating an answer.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/answer_parameter"}
+        }
+      },
+      "required": [
+        "type", "parameters"
+      ]
+    },
+    "parameter": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique ID of this parameter within this complete _exercise_",
+          "$ref": "#/definitions/identifier"
+        },
+        "name": {
+          "description": "The name of the parameter which can be used to refer to this variable in rich_content, latex_expressions, or question_variables",
+          "type": "string"
+        },
+        "definition": {
+          "type": "object",
+          "oneOf": [
+            {"$ref": "./parameter.schema.json#/definitions/generators"},
+            {"$ref": "./parameter.schema.json#/definitions/transformers"}
+          ]
+        },
+        "data_files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "The name of the data-set which belongs to this parameter",
+                "type": "string"
+              },
+              "data": {
+                "description": "A list of lists representing the rows of the dataset. Each column is an entry in the array",
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": { "$ref": "./content-types.schema.json#/definitions/latex_expression" }
+                }
+              },
+              "fields": {
+                "description": "A list of names of the fields in the data-set",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "name", "definition"
+      ]
+    },
+    "answer_parameter": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique ID of this answer_parameter within this complete _exercise_",
+          "$ref": "#/definitions/identifier"
+        },
+        "name": {
+          "description": "The name of an answer parameter which can be used to refer to this variable in rich_content, latex_expressions, or question_variables",
+          "type": "string"
+        },
+        "definition": {
+          "type": "object",
+          "oneOf": [
+            {"$ref": "./parameter.schema.json#/definitions/transformers"}
+          ]
+        }
+      },
+      "required": [
+        "name", "definition"
+      ]
+    },
+    "license": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "value": { "type": "string" },
+        "link": { "type": "string" }
+      },
+      "required": [
+        "description", "value", "name", "link"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Unique identifier of this exercise, to refer to in exercise containers such as subjects and tests",
+      "$ref": "#/definitions/identifier"
+    },
+    "name": {
+      "description": "The human readable name for this exercise",
+      "type": "string"
+    },
+    "version": {
+      "description": "The current version of this exercise",
+      "type": "string"
+    },
+    "mode": {
+      "description": "The mode in which this exercise should be played. Default: 'at_once'",
+      "type": "string",
+      "enum": ["at_once", "conditional", "steps"]
+    },
+    "questions": {
+      "description": "The questions to add in this exercise. The default ordering of the questions is the index in this list.",
+      "type": "array",
+      "items": {"$ref": "#/definitions/question"}
+    },
+    "template": {
+      "description": "The definition of the template values which can be used within the rich content / parameter values of this exercise",
+      "type": "object",
+      "$ref": "#/definitions/template"
+    },
+    "license": {
+      "description": "The license under which this exercise is available",
+      "type": "object",
+      "$ref": "#/definitions/license"
+    }
+  },
+  "required": [
+    "id", "name", "mode", "questions", "license"
+  ]
+}

@@ -1,0 +1,405 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.grasple.com/v0.0.1/parameter.json",
+  "definitions": {
+    "generators": {
+      "description": "All placeholders which generate values TODO: extend",
+      "oneOf": [
+        { "$ref": "#/definitions/range"},
+        { "$ref": "#/definitions/random"},
+        { "$ref": "#/definitions/dataset_filebased"},
+        { "$ref": "#/definitions/dataset_sample"}
+      ]
+    },
+    "transformers": {
+      "description": "All placeholders which transform an input to an output TODO: extend",
+      "oneOf": [
+        {"$ref": "#/definitions/dataset_correlation"},
+        {"$ref": "#/definitions/dataset_linear_regression_ols"},
+        {"$ref": "#/definitions/derivative"},
+        {"$ref": "#/definitions/display_decimal_with_base"},
+        {"$ref": "#/definitions/formula"},
+        {"$ref": "#/definitions/round"},
+        {"$ref": "#/definitions/imaginary_part"},
+        {"$ref": "#/definitions/integral"},
+        {"$ref": "#/definitions/interval"},
+        {"$ref": "#/definitions/inverse"},
+        {"$ref": "#/definitions/length"},
+        {"$ref": "#/definitions/limit"},
+        {"$ref": "#/definitions/limit"},
+        {"$ref": "#/definitions/matrix_columnspace"},
+        {"$ref": "#/definitions/matrix_determinant"},
+        {"$ref": "#/definitions/matrix_diagonalize"},
+        {"$ref": "#/definitions/matrix_eigenvalues"},
+        {"$ref": "#/definitions/matrix_eigenvectors"},
+        {"$ref": "#/definitions/matrix_nullspace"},
+        {"$ref": "#/definitions/matrix_rank"},
+        {"$ref": "#/definitions/matrix_shape"},
+        {"$ref": "#/definitions/matrix_transpose"},
+        {"$ref": "#/definitions/max"},
+        {"$ref": "#/definitions/mean"},
+        {"$ref": "#/definitions/median"},
+        {"$ref": "#/definitions/min"},
+        {"$ref": "#/definitions/mode"},
+        {"$ref": "#/definitions/read_decimal_with_base"},
+        {"$ref": "#/definitions/real_part"},
+        {"$ref": "#/definitions/row_reduced_echelon_form"},
+        {"$ref": "#/definitions/select"},
+        {"$ref": "#/definitions/substitute"},
+        {"$ref": "#/definitions/unique"},
+        {"$ref": "#/definitions/variance"}
+      ]
+    },
+    "value_parameter": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        }
+      },
+      "required": ["value"]
+    },
+    "dataset_correlation": {
+      "type": "object",
+      "properties": {
+        "dataset_x": {
+          "description": "The name of the parameter referring to the first data-set to correlate",
+          "$ref": "./content-types.schema.json#/definitions/parameter_name"
+        },
+        "dataset_y": {
+          "description": "The name of the parameter referring to the second data-set to correlate",
+          "$ref": "./content-types.schema.json#/definitions/parameter_name"
+        },
+        "method": {
+          "type": "string",
+          "enum": ["spearman", "pearson", "kendall"]
+        }
+      },
+      "required": ["dataset_x", "dataset_y"]
+    },
+    "dataset_filebased": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "description": "The name of the file which is uploaded",
+          "type": "string"
+        },
+        "downloadable": {
+          "description": "If this dataset can be downloaded by the user",
+          "type": "boolean"
+        }
+      },
+      "required": ["filename", "downloadable"]
+    },
+    "dataset_linear_regression_ols": {
+      "type": "object",
+      "$ref": "#/definitions/value_parameter",
+      "properties": {
+        "coefficient": {
+          "description": "List of coefficients to be used used in the regression. All coefficients should be formatted as a latex string with optional parameter names",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["value", "coefficient"]
+    },
+    "dataset_sample": {
+      "type": "object",
+      "properties": {
+        "dataset": {
+          "description": "The name of the parameter referring to the data-set to sample",
+          "$ref": "./content-types.schema.json#/definitions/parameter_name"
+        },
+        "sample_size": {
+          "description": "How many rows need to be sampled from the given dataset",
+          "type": "integer"
+        },
+        "filename": {
+          "description": "The name of the file which is uploaded",
+          "type": "string"
+        },
+        "downloadable": {
+          "description": "If this dataset can be downloaded by the user",
+          "type": "boolean"
+        }
+      },
+      "required": ["filename", "downloadable", "dataset", "sample_size"]
+    },
+    "derivative": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "arg": {
+          "description": "The variable which to differentiate to",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        }
+      },
+      "required": ["value", "arg"]
+    },
+    "display_decimal_with_base": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "base": {
+          "description": "The base to convert to",
+          "type": "string",
+          "enum": ["binary", "octal", "decimal", "hexadecimal"]
+        }
+      },
+      "required": ["value", "base"]
+    },
+    "formula": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "round": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "decimals": {
+          "description": "The number of decimals to round to",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "method": {
+          "description": "The method to use for rounding",
+          "type": "string",
+          "enum": ["half_towards_even", "half_away_from_zero", "half_towards_zero", "away_from_zero", "towards_zero", "up", "down"]
+        }
+      },
+      "required": ["value", "decimals", "method"]
+    },
+    "imaginary_part": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "integral": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "arg": {
+          "description": "The variable which to integrate to",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "sub": {
+          "description": "The lower bounds of the interval to integrate on",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "sup": {
+          "description": "The upper bounds of the interval to integrate on",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        }
+      },
+      "required": ["value", "arg"]
+    },
+    "interval": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "inverse": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "length": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "limit": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "arg": {
+          "description": "The variable to calculate the limit of",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "approach": {
+          "description": "The value which arg approaches",
+          "type": "string"
+        },
+        "direction": {
+          "description": "The direction in which the limit should be calculated",
+          "type": "string",
+          "enum": ["+", "-"]
+        }
+      },
+      "required": ["value", "arg", "approach"]
+    },
+    "matrix_columnspace": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "matrix_determinant": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "matrix_diagonalize": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "matrix_eigenvalues": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "matrix_eigenvectors": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "matrix_nullspace": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "matrix_rank": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "matrix_shape": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "matrix_transpose": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "max": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "mean": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "median": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "min": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "mode": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "random": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "description": "The minimum value which can be generated",
+          "type": "integer"
+        },
+        "max": {
+          "description": "The maximum value which can be generated",
+          "type": "integer"
+        },
+        "decimals": {
+          "description": "The number of decimals to use in generating values",
+          "type": "integer"
+        }
+      },
+      "required": ["min", "max", "decimals"]
+    },
+    "range": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "description": "The minimum value which can be generated",
+          "type": "integer"
+        },
+        "max": {
+          "description": "The maximum value which can be generated",
+          "type": "integer"
+        },
+        "step": {
+          "description": "The step size to be used in generating values",
+          "type": "integer"
+        }
+      },
+      "required": ["min", "max", "step"]
+    },
+    "read_decimal_with_base": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "base": {
+          "description": "The base to read from",
+          "type": "string",
+          "enum": ["binary", "octal", "decimal", "hexadecimal"]
+        }
+      },
+      "required": ["value", "base"]
+    },
+    "real_part": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "row_reduced_echelon_form": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "select": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "first_index": {
+          "description": "The first index to be used in selecting a value",
+          "type": "integer"
+        },
+        "second_index": {
+          "description": "The second index to be used in selecting a value",
+          "type": "integer"
+        }
+      },
+      "required": ["value", "first_index"]
+    },
+    "standard_deviation": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "method": {
+          "description": "The method to use for sampling",
+          "type": "string",
+          "enum": ["sample", "population"]
+        }
+      },
+      "required": ["value", "method"]
+    },
+    "substitute": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "subs": {
+          "description": "The values to substitute",
+          "type": "array",
+          "prefixItems": [{"type": "string"}, {"type": "string"}]
+        }
+      },
+      "required": ["value", "first_index"]
+    },
+    "unique": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "variance": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "method": {
+          "description": "The method to use for sampling",
+          "type": "string",
+          "enum": ["sample", "population"]
+        }
+      },
+      "required": ["value", "method"]
+    }
+  }
+}

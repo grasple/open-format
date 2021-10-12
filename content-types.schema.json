@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.grasple.com/v0.0.1/exercise.json",
+  "definitions": {
+    "latex_expression": {
+      "description": "A valid latex expression, possibly referring to parameters defined in the exercise template",
+      "type": "string"
+    },
+    "parameter_name": {
+      "description": "Reference to the name of either the student answer or a parameter defined the exercise template",
+      "type": "string"
+    }
+  }
+}
