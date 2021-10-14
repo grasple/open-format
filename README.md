@@ -1,9 +1,10 @@
 # Format for Open Interactive Math Exercises
 
-The goal of this repository to facilitate the development of an open format for online, interactive math exercises.
+The goal of this repository to facilitate the development of a well-documented open import/export format for online, interactive math exercises.
+
 The first version of the format is defined using the [JSON Schema vocabulary](http://json-schema.org/) and is captured in the following schemas:
 
-- [exercises.schema.json](./exercise.schema.json): the main schema for different type of exercises, you probably want to start here.
+- [exercises.schema.json](./exercise.schema.json): the main schema for different type of exercises. You probably want to start here.
 - [parameter.schema.json](./parameter.schema.json): a schema to define different types of parameters
 - [content-types.schema.json](./content-types.schema.json): common definitions of types used in the other two schemas. 
 
