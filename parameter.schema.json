@@ -41,6 +41,7 @@
         {"allOf": [{"$ref": "#/definitions/median"}, {"properties": {"type": {"const": "median"}}}]},
         {"allOf": [{"$ref": "#/definitions/min"}, {"properties": {"type": {"const": "min"}}}]},
         {"allOf": [{"$ref": "#/definitions/mode"}, {"properties": {"type": {"const": "mode"}}}]},
+        {"allOf": [{"$ref": "#/definitions/plot_2d"}, {"properties": {"type": {"const": "plot_2d"}}}]},
         {"allOf": [{"$ref": "#/definitions/read_decimal_with_base"}, {"properties": {"type": {"const": "read_decimal_with_base"}}}]},
         {"allOf": [{"$ref": "#/definitions/real_part"}, {"properties": {"type": {"const": "real_part"}}}]},
         {"allOf": [{"$ref": "#/definitions/row_reduced_echelon_form"}, {"properties": {"type": {"const": "row_reduced_echelon_form"}}}]},
@@ -277,6 +278,50 @@
     },
     "mode": {
       "$ref": "#/definitions/value_parameter"
+    },
+    "plot_2d": {
+      "type": "object",
+      "properties": {
+        "lines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "description": "Value to plot",
+                "$ref": "./content-types.schema.json#/definitions/latex_expression"
+              },
+              "color": {
+                "description": "Color of the line to plot in hexadecimal format",
+                "type": "string"
+              },
+              "label": {
+                "description": "label to show in the legend for this line",
+                "$ref": "./content-types.schema.json#/definitions/latex_expression"
+              }
+            }
+          }
+        },
+        "x_min": {
+          "description": "The minimum value of the x-axes, default -10",
+          "type": "integer"
+        },
+        "x_max": {
+          "description": "The maximum value of the x-axes, default 10",
+          "type": "integer"
+        },
+        "y_min": {
+          "description": "The minimum value of the y-axes, default -10",
+          "type": "integer"
+        },
+        "y_max": {
+          "description": "The maximum value of the y-axes, default 10",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lines"
+      ]
     },
     "random": {
       "type": "object",
