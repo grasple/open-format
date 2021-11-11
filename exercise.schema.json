@@ -299,7 +299,7 @@
         "generated_at": { "type": "integer", "description": "UNIX timestamp of generation date" }
       },
       "required": [
-        "description", "value", "name", "link"
+        "schema_version", "generated_at"
       ]
     }
   },
