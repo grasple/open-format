@@ -16,13 +16,12 @@
       "type": "array",
       "items": {
         "type": "object",
-        "properties": {
-          "language": {
+        "additionalProperties": {"type": "string"},
+        "patternProperties": {
+          "^.*$": {
+            "type": "string",
             "description": "The language this content is in, specified as a IETF BCP 47 language tag",
-            "type": "string"
-          },
-          "content": {
-            "$ref": "#/definitions/rich_content"
+            "value": {"$ref": "#/definitions/rich_content"}
           }
         }
       }
