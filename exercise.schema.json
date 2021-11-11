@@ -292,6 +292,16 @@
       "required": [
         "description", "value", "name", "link"
       ]
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "type": "string", "description": "Version of the schema this exercise is generated with" },
+        "generated_at": { "type": "integer", "description": "UNIX timestamp of generation date" }
+      },
+      "required": [
+        "description", "value", "name", "link"
+      ]
     }
   },
   "type": "object",
@@ -327,6 +337,11 @@
       "description": "The license under which this exercise is available",
       "type": "object",
       "$ref": "#/definitions/license"
+    },
+    "metadata": {
+      "description": "Meta information about this challenge",
+      "type": "object",
+      "$ref": "#/definitions/metadata"
     }
   },
   "required": [
