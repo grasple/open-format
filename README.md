@@ -2,17 +2,6 @@
 
 The goal of this repository to facilitate the development of a well-documented open import/export format for online, interactive math exercises.
 
-The first version of the format is defined using the [JSON Schema vocabulary](http://json-schema.org/) and is captured in the following schemas:
-
-- [exercises.schema.json](./exercise.schema.json): the main schema for different type of exercises. You probably want to start here.
-- [parameter.schema.json](./parameter.schema.json): a schema to define different types of parameters
-- [content-types.schema.json](./content-types.schema.json): common definitions of types used in the other two schemas. 
-
-#### Note: the current version of the format is `v0.0.1` and is published to sollicit feedback from the community. Please keep in mind that this format can (and most likely will) change in the future.
-
-## Providing feedback
-If you have any feedback please feel free to create a pull request with proposed changes, create an issue with your feedback, or comment on [this commit](https://github.com/grasple/open-format-schemas/commit/76b6177c8d74227e33e79442d70ee7044016d9c8).
-
 ## What is the purpose of this open file format?
 The first purpose of this file format is to make it possible to export exercises created in Grasple to a text file, and to define the format in which exercises need to be written in order to automatically import them into Grasple. 
 
@@ -24,6 +13,22 @@ You can use this format to write transformer scripts so that you can take a Gras
 It might well be that you run into issues where the features of these applications do not perfectly overlap. If you run into such issues, please let us know. This format is an attempt to make it easier to import and export learning resources between applications, to stimulate interoperability between educational applications. 
 
 #### Do be aware! For now this is an experimental format, v0.0.1, so please be aware that things can and will change! 
+
+## Where to start?
+
+The first version of the format is defined using the [JSON Schema vocabulary](http://json-schema.org/) and is captured in the following schemas:
+
+- [exercises.schema.json](./exercise.schema.json): the main schema for different type of exercises. You probably want to start here.
+- [parameter.schema.json](./parameter.schema.json): a schema to define different types of parameters
+- [content-types.schema.json](./content-types.schema.json): common definitions of types used in the other two schemas. 
+
+#### Note: the current version of the format is `v0.0.1` and is published to sollicit feedback from the community. Please keep in mind that this format can (and most likely will) change in the future.
+
+If you want you can look at some example exercises that are exported using the format described in the json schema's.
+[Find the example exercises here](https://github.com/grasple/open-format-schemas/tree/main/examples)
+
+## Providing feedback
+If you have any feedback please feel free to create a pull request with proposed changes, create an issue with your feedback, or comment on [this commit](https://github.com/grasple/open-format-schemas/commit/76b6177c8d74227e33e79442d70ee7044016d9c8).
 
 ## What features are included in the format?
 Some notable features in the format are:
