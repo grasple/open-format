@@ -1,1 +1,134 @@
-{"id":24108,"name":"Exercise #24108","version":"7","mode":"at_once","license":{"name":"Non-explicit license","description":"No known license for this content item","value":"non-explicit","link":"https:\/\/en.wikipedia.org\/wiki\/Copyright"},"metadata":{"schema_version":"0.0.1","generated_at":1636647796},"questions":[{"id":24108,"type":"open-math","question":[{"en":"<p>What is \\(\\frac{d}{dx}f\\left(x\\right)\\) ?<br><\/p>"},{"nl":"<p>Bereken&nbsp;\\(\\frac{d}{dx}f\\left(x\\right)\\)<\/p>"}],"answers":[{"id":21498,"percentage_of_full_points":100,"correct":true,"rule_definition":{"lhs":"student.answer1","inverse":false,"relation":"normal","rhs":"[!derivFx!]"}},{"id":21499,"percentage_of_full_points":0,"correct":false,"rule_definition":{"lhs":"student.answer1","inverse":true,"relation":"normal","rhs":"[!derivFx!]"}}],"description":[{"en":"<p>\\(f\\left(x\\right)=[!fx!]\\)<br><\/p>"},{"nl":"<p>\\(f\\left(x\\right)=[!fx!]\\)<br><\/p>"}],"weight":1,"answer_field":[{"id":1,"parameter_reference":"student.answer1"}]}],"template":{"type":"basic","parameters":[{"id":41921,"name":"a","definition":{"type":"range","min":"2","step":1,"max":10}},{"id":41922,"name":"power","definition":{"type":"range","min":"2","step":1,"max":"6"}},{"id":41923,"name":"const","definition":{"type":"range","min":"3","step":1,"max":10}},{"id":41924,"name":"fx","definition":{"type":"formula","value":"[!a!]\\cdot x^{[!power!]}+[!const!]"}},{"id":41925,"name":"derivFx","definition":{"type":"derivative","value":"[!fx!]","arg":"x"}}],"answer_parameters":[{"id":1464,"name":"intSA","definition":{"type":"integral","value":"[!student.answer1!]","arg":"x","sub":"","sup":""}}]}}
+{
+   "id" : 24108,
+   "license" : {
+      "description" : "No known license for this content item",
+      "link" : "https://en.wikipedia.org/wiki/Copyright",
+      "name" : "Non-explicit license",
+      "value" : "non-explicit"
+   },
+   "metadata" : {
+      "generated_at" : 1636647796,
+      "schema_version" : "0.0.1"
+   },
+   "mode" : "at_once",
+   "name" : "Exercise #24108",
+   "questions" : [
+      {
+         "answer_field" : [
+            {
+               "id" : 1,
+               "parameter_reference" : "student.answer1"
+            }
+         ],
+         "answers" : [
+            {
+               "correct" : true,
+               "id" : 21498,
+               "percentage_of_full_points" : 100,
+               "rule_definition" : {
+                  "inverse" : false,
+                  "lhs" : "student.answer1",
+                  "relation" : "normal",
+                  "rhs" : "[!derivFx!]"
+               }
+            },
+            {
+               "correct" : false,
+               "id" : 21499,
+               "percentage_of_full_points" : 0,
+               "rule_definition" : {
+                  "inverse" : true,
+                  "lhs" : "student.answer1",
+                  "relation" : "normal",
+                  "rhs" : "[!derivFx!]"
+               }
+            }
+         ],
+         "description" : [
+            {
+               "en" : "<p>\\(f\\left(x\\right)=[!fx!]\\)<br></p>"
+            },
+            {
+               "nl" : "<p>\\(f\\left(x\\right)=[!fx!]\\)<br></p>"
+            }
+         ],
+         "id" : 24108,
+         "question" : [
+            {
+               "en" : "<p>What is \\(\\frac{d}{dx}f\\left(x\\right)\\) ?<br></p>"
+            },
+            {
+               "nl" : "<p>Bereken&nbsp;\\(\\frac{d}{dx}f\\left(x\\right)\\)</p>"
+            }
+         ],
+         "type" : "open-math",
+         "weight" : 1
+      }
+   ],
+   "template" : {
+      "answer_parameters" : [
+         {
+            "definition" : {
+               "arg" : "x",
+               "sub" : "",
+               "sup" : "",
+               "type" : "integral",
+               "value" : "[!student.answer1!]"
+            },
+            "id" : 1464,
+            "name" : "intSA"
+         }
+      ],
+      "parameters" : [
+         {
+            "definition" : {
+               "max" : 10,
+               "min" : "2",
+               "step" : 1,
+               "type" : "range"
+            },
+            "id" : 41921,
+            "name" : "a"
+         },
+         {
+            "definition" : {
+               "max" : "6",
+               "min" : "2",
+               "step" : 1,
+               "type" : "range"
+            },
+            "id" : 41922,
+            "name" : "power"
+         },
+         {
+            "definition" : {
+               "max" : 10,
+               "min" : "3",
+               "step" : 1,
+               "type" : "range"
+            },
+            "id" : 41923,
+            "name" : "const"
+         },
+         {
+            "definition" : {
+               "type" : "formula",
+               "value" : "[!a!]\\cdot x^{[!power!]}+[!const!]"
+            },
+            "id" : 41924,
+            "name" : "fx"
+         },
+         {
+            "definition" : {
+               "arg" : "x",
+               "type" : "derivative",
+               "value" : "[!fx!]"
+            },
+            "id" : 41925,
+            "name" : "derivFx"
+         }
+      ],
+      "type" : "basic"
+   },
+   "version" : "7"
+}
