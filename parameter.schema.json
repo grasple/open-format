@@ -200,7 +200,7 @@
           "$ref": "./content-types.schema.json#/definitions/latex_expression"
         }
       },
-      "required": ["df"]
+      "required": ["mu", "sigma"]
     },
     "distribution_student_t": {
       "type": "object",
