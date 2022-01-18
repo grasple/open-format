@@ -3,17 +3,21 @@
   "$id": "https://schemas.grasple.com/v0.0.1/parameter.json",
   "definitions": {
     "generators": {
-      "description": "All placeholders which generate values TODO: extend",
+      "description": "All parameters which generate values",
       "oneOf": [
         {"allOf": [{ "$ref": "#/definitions/range"}, {"properties": {"type": {"const": "range"}}}]},
         {"allOf": [{ "$ref": "#/definitions/random"}, {"properties": {"type": {"const": "random"}}}]},
         {"allOf": [{ "$ref": "#/definitions/dataset_filebased"}, {"properties": {"type": {"const": "dataset_filebased"}}}]},
-        {"allOf": [{ "$ref": "#/definitions/dataset_sample"}, {"properties": {"type": {"const": "dataset_sample"}}}]}
+        {"allOf": [{ "$ref": "#/definitions/dataset_sample"}, {"properties": {"type": {"const": "dataset_sample"}}}]},
+        {"allOf": [{ "$ref": "#/definitions/distribution_normal"}, {"properties": {"type": {"const": "distribution_normal"}}}]},
+        {"allOf": [{ "$ref": "#/definitions/distribution_student_t"}, {"properties": {"type": {"const": "distribution_student_t"}}}]},
+        {"allOf": [{ "$ref": "#/definitions/distribution_chi_2"}, {"properties": {"type": {"const": "distribution_chi_2"}}}]}
       ]
     },
     "transformers": {
-      "description": "All placeholders which transform an input to an output TODO: extend",
+      "description": "All parameters which transform an input to an output",
       "oneOf": [
+        {"allOf": [{"$ref": "#/definitions/cumulative_distribution_function"}, {"properties": {"type": {"const": "cumulative_distribution_function"}}}]},
         {"allOf": [{"$ref": "#/definitions/dataset_correlation"}, {"properties": {"type": {"const": "dataset_correlation"}}}]},
         {"allOf": [{"$ref": "#/definitions/dataset_linear_regression_ols"}, {"properties": {"type": {"const": "dataset_linear_regression_ols"}}}]},
         {"allOf": [{"$ref": "#/definitions/derivative"}, {"properties": {"type": {"const": "derivative"}}}]},
@@ -42,6 +46,8 @@
         {"allOf": [{"$ref": "#/definitions/min"}, {"properties": {"type": {"const": "min"}}}]},
         {"allOf": [{"$ref": "#/definitions/mode"}, {"properties": {"type": {"const": "mode"}}}]},
         {"allOf": [{"$ref": "#/definitions/plot_2d"}, {"properties": {"type": {"const": "plot_2d"}}}]},
+        {"allOf": [{"$ref": "#/definitions/probability_distribution_function"}, {"properties": {"type": {"const": "probability_distribution_function"}}}]},
+        {"allOf": [{"$ref": "#/definitions/quantile"}, {"properties": {"type": {"const": "quantile"}}}]},
         {"allOf": [{"$ref": "#/definitions/read_decimal_with_base"}, {"properties": {"type": {"const": "read_decimal_with_base"}}}]},
         {"allOf": [{"$ref": "#/definitions/real_part"}, {"properties": {"type": {"const": "real_part"}}}]},
         {"allOf": [{"$ref": "#/definitions/row_reduced_echelon_form"}, {"properties": {"type": {"const": "row_reduced_echelon_form"}}}]},
@@ -60,6 +66,20 @@
         }
       },
       "required": ["value"]
+    },
+    "cumulative_distribution_function": {
+      "type": "object",
+      "properties": {
+        "distribution": {
+          "description": "A distribution defined by one of the distribution function",
+          "$ref": "./content-types.schema.json#/definitions/parameter_name"
+        },
+        "x": {
+          "description": "The value on which the CDF needs to be computed",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        }
+      },
+      "required": ["distribution", "x"]
     },
     "dataset_correlation": {
       "type": "object",
@@ -157,6 +177,40 @@
         }
       },
       "required": ["value", "base"]
+    },
+    "distribution_chi_2": {
+      "type": "object",
+      "properties": {
+        "df": {
+          "description": "The degrees of freedom",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        }
+      },
+      "required": ["df"]
+    },
+    "distribution_normal": {
+      "type": "object",
+      "properties": {
+        "mu": {
+          "description": "The mean of the distribution (default 0)",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "sigma": {
+          "description": "The standard deviation of the distribution (default 1)",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        }
+      },
+      "required": ["df"]
+    },
+    "distribution_student_t": {
+      "type": "object",
+      "properties": {
+        "df": {
+          "description": "The degrees of freedom",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        }
+      },
+      "required": ["df"]
     },
     "formula": {
       "$ref": "#/definitions/value_parameter"
@@ -322,6 +376,34 @@
       "required": [
         "lines"
       ]
+    },
+    "probability_distribution_function": {
+      "type": "object",
+      "properties": {
+        "distribution": {
+          "description": "A distribution defined by one of the distribution function",
+          "$ref": "./content-types.schema.json#/definitions/parameter_name"
+        },
+        "x": {
+          "description": "The value on which the PDF needs to be computed",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        }
+      },
+      "required": ["distribution", "x"]
+    },
+    "quantile": {
+      "type": "object",
+      "properties": {
+        "distribution": {
+          "description": "A distribution defined by one of the distribution function",
+          "$ref": "./content-types.schema.json#/definitions/parameter_name"
+        },
+        "percentile": {
+          "description": "The required quantile (a number between 0 and 1)",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        }
+      },
+      "required": ["distribution", "percentile"]
     },
     "random": {
       "type": "object",
