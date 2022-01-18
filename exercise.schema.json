@@ -313,6 +313,10 @@
       "description": "The human readable name for this exercise",
       "type": "string"
     },
+    "note": {
+      "description": "A free-form field which can be used by editors to add meta-data to this exercise.",
+      "$ref": "#/definitions/i18n_rich_content"
+    },
     "version": {
       "description": "The current version of this exercise",
       "type": "string"
