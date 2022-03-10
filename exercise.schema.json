@@ -7,7 +7,7 @@
       "type": "integer"
     },
     "rich_content": {
-      "description": "The content of a field specified in HTML. Within this HTML Latex blocks can be embedded within \\(\\) blocks. Within the Latex expressions parameters can be references by name in the form of `[!<parameterName>!]`",
+      "description": "The content of a field specified in HTML. Within this HTML Latex blocks can be embedded within \\(\\) blocks. Please note that this is a single slash character followed by an open / close parenthesis. Within the Latex expressions parameters can be references by name in the form of `[!<parameterName>!]`",
       "type": "string",
       "format": "html"
     },
