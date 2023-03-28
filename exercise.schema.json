@@ -75,11 +75,50 @@
           "description": "List of answer fields which can be used within this question",
           "type": "array",
           "items": {"$ref": "#/definitions/answer_field"}
+        },
+        "settings": {
+          "description": "Settings which influence the way the question is to be consumed by the player",
+          "$ref": "#/definitions/question_settings"
         }
       },
       "required": [
         "id", "type", "question", "answers"
       ]
+    },
+    "question_settings" : {
+      "type": "object",
+      "properties": {
+        "max_attempts": {
+          "description": "The number of attempts a user has for answering the question correctly",
+          "type": "number",
+          "default": 3
+        },
+        "attempt_settings": {
+          "description": "Settings which apply to a specific attempt. The index of the array is used as the number of the attempt the setting applies to. If no specific settings are given the value will be the default of the property",
+          "type": "array",
+          "items": {
+            "type": "object", "properties": {
+              "percentage_of_full_points": {
+                "description": "The percentage with which the maximum number of points for this question is multiplied if the user answers the question correctly in this attempt",
+                "type": "number",
+                "default": 0
+              }
+            }
+          },
+          "default": [
+            { "percentage_of_full_points": 100}
+          ]
+        },
+        "feedback_at_incorrect_end_state": {
+          "description": "The type of feedback which should be shown when the user has used `max_attempts` without a correct answer. This can either be the feedback for the given answer, or both the correct answer and the contents of the `feedback_correct` field ('correct_answer_and_detailed_solution')",
+          "type": "string",
+          "enum": [
+            "given_answer_feedback", "correct_answer_and_detailed_solution"
+          ],
+          "default": "correct_answer_and_detailed_solution"
+        }
+      },
+      "required": []
     },
     "answer": {
       "type": "object",
@@ -284,7 +323,7 @@
       "type": "object",
       "properties": {
         "name": { "type": "string" },
-        "description": { "type": "string" },
+        "description": { "$ref": "#/definitions/rich_content" },
         "value": { "type": "string" },
         "link": { "type": "string" }
       },
