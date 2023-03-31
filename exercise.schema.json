@@ -95,9 +95,9 @@
         },
         "attempt_settings": {
           "description": "Settings which apply to a specific attempt. The index of the array is used as the number of the attempt the setting applies to. If no specific settings are given the value will be the default of the property",
-          "type": "array",
-          "items": {
-            "type": "object", "properties": {
+          "type": "object",
+          "patternProperties" : {
+            "^[0-9]$": {
               "percentage_of_full_points": {
                 "description": "The percentage with which the maximum number of points for this question is multiplied if the user answers the question correctly in this attempt",
                 "type": "number",
