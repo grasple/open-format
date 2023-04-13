@@ -94,10 +94,10 @@
           "default": 3
         },
         "attempt_settings": {
-          "description": "Settings which apply to a specific attempt. The index of the array is used as the number of the attempt the setting applies to. If no specific settings are given the value will be the default of the property",
+          "description": "Settings which apply to a specific attempt. The settings for the first attempt are specified in the object under the key '1'. If no specific settings are given for an attempt the value will be the default of the property",
           "type": "object",
           "patternProperties" : {
-            "^[0-9]$": {
+            "^[1-9]$": {
               "percentage_of_full_points": {
                 "description": "The percentage with which the maximum number of points for this question is multiplied if the user answers the question correctly in this attempt",
                 "type": "number",
@@ -106,7 +106,7 @@
             }
           },
           "default": [
-            { "percentage_of_full_points": 100}
+            { "1": { "percentage_of_full_points": 100 }}
           ]
         },
         "feedback_at_incorrect_end_state": {
