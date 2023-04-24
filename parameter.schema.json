@@ -67,6 +67,14 @@
       },
       "required": ["value"]
     },
+    "answer_rule_definition": {
+      "type": "object",
+      "properties": {
+        "rule_definition": {"$ref": "./exercise.schema.json#/definitions/rule_definition"},
+        "type": {"const": "answer_rule_definition"}
+      },
+      "required": ["rule_definition"]
+    },
     "cumulative_distribution_function": {
       "type": "object",
       "properties": {
