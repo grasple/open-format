@@ -22,6 +22,7 @@
         {"allOf": [{"$ref": "#/definitions/dataset_linear_regression_ols"}, {"properties": {"type": {"const": "dataset_linear_regression_ols"}}}]},
         {"allOf": [{"$ref": "#/definitions/derivative"}, {"properties": {"type": {"const": "derivative"}}}]},
         {"allOf": [{"$ref": "#/definitions/display_decimal_with_base"}, {"properties": {"type": {"const": "display_decimal_with_base"}}}]},
+        {"allOf": [{"$ref": "#/definitions/display_expression_with_mixed_numbers"}, {"properties": {"type": {"const": "display_expression_with_mixed_numbers"}}}]},
         {"allOf": [{"$ref": "#/definitions/formula"}, {"properties": {"type": {"const": "formula"}}}]},
         {"allOf": [{"$ref": "#/definitions/round"}, {"properties": {"type": {"const": "round"}}}]},
         {"allOf": [{"$ref": "#/definitions/imaginary_part"}, {"properties": {"type": {"const": "imaginary_part"}}}]},
@@ -49,6 +50,7 @@
         {"allOf": [{"$ref": "#/definitions/probability_distribution_function"}, {"properties": {"type": {"const": "probability_distribution_function"}}}]},
         {"allOf": [{"$ref": "#/definitions/quantile"}, {"properties": {"type": {"const": "quantile"}}}]},
         {"allOf": [{"$ref": "#/definitions/read_decimal_with_base"}, {"properties": {"type": {"const": "read_decimal_with_base"}}}]},
+        {"allOf": [{"$ref": "#/definitions/read_expression_with_mixed_numbers"}, {"properties": {"type": {"const": "read_expression_with_mixed_numbers"}}}]},
         {"allOf": [{"$ref": "#/definitions/real_part"}, {"properties": {"type": {"const": "real_part"}}}]},
         {"allOf": [{"$ref": "#/definitions/row_reduced_echelon_form"}, {"properties": {"type": {"const": "row_reduced_echelon_form"}}}]},
         {"allOf": [{"$ref": "#/definitions/select"}, {"properties": {"type": {"const": "select"}}}]},
@@ -177,6 +179,16 @@
         }
       },
       "required": ["value", "base"]
+    },
+    "display_expression_with_mixed_numbers": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with mixed numbers i.s.o. improper fractions",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        }
+      },
+      "required": ["value"]
     },
     "distribution_chi_2": {
       "type": "object",
@@ -455,6 +467,16 @@
         }
       },
       "required": ["value", "base"]
+    },
+    "read_expression_with_mixed_numbers": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Value for this parameter formatted as a latex string with optional parameter references",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        }
+      },
+      "required": ["value"]
     },
     "real_part": {
       "$ref": "#/definitions/value_parameter"
