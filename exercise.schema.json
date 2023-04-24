@@ -311,7 +311,8 @@
         "definition": {
           "type": "object",
           "oneOf": [
-            {"$ref": "./parameter.schema.json#/definitions/transformers"}
+            {"$ref": "./parameter.schema.json#/definitions/transformers"},
+            {"$ref": "./parameter.schema.json#/definitions/answer_rule_definition"}
           ]
         }
       },
