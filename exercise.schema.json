@@ -116,6 +116,11 @@
             "given_answer_feedback", "correct_answer_and_detailed_solution"
           ],
           "default": "correct_answer_and_detailed_solution"
+        },
+        "allow_answer_shuffle": {
+          "description": "Whether it is allowed to randomize the order of the answers",
+          "type": "boolean",
+          "default": false
         }
       },
       "required": []
