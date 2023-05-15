@@ -54,15 +54,13 @@
           "description": "The feedback to show when the user provides an incorrect answer without specific feedback",
           "$ref": "#/definitions/i18n_rich_content"
         },
-        "correct_question_transition_id": {
-          "description": "The question in this exercise to show when the user provides a correct answer. Only relevant for `conditional` type questions",
-          "type": ["number", "null"],
-          "$ref": "#/definitions/identifier"
+        "correct_question_transition": {
+          "description": "The transition for when the user provides a correct answer. Only relevant for `conditional` type questions",
+          "$ref": "#/definitions/question_transition"
         },
-        "incorrect_question_transition_id": {
-          "description": "The question in this exercise to show when the user provides an incorrect answer. Only relevant for `conditional` type questions",
-          "type": ["number", "null"],
-          "$ref": "#/definitions/identifier"
+        "incorrect_question_transition": {
+          "description": "The transition for when the user provides an incorrect answer. Only relevant for `conditional` type questions",
+          "$ref": "#/definitions/question_transition"
         },
         "weight": {
           "description": "The weight this question has in the calculation of the overall score for the exercise",
@@ -132,8 +130,10 @@
       "properties": {
         "question_id": {
           "description": "The question in this exercise to show when this transition is triggered. Can be `null`, which ends this exercise and does not trigger transitions for correct and incorrect.",
-          "type": ["number", "null"],
-          "$ref": "#/definitions/identifier"
+          "anyOf": [
+            {"$ref": "#/definitions/identifier"},
+            {"type": "null"}
+          ]
         }
       }
     },
