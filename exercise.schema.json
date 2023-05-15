@@ -56,10 +56,12 @@
         },
         "correct_question_transition_id": {
           "description": "The question in this exercise to show when the user provides a correct answer. Only relevant for `conditional` type questions",
+          "type": ["number", "null"],
           "$ref": "#/definitions/identifier"
         },
         "incorrect_question_transition_id": {
           "description": "The question in this exercise to show when the user provides an incorrect answer. Only relevant for `conditional` type questions",
+          "type": ["number", "null"],
           "$ref": "#/definitions/identifier"
         },
         "weight": {
@@ -125,6 +127,16 @@
       },
       "required": []
     },
+    "question_transition": {
+      "type": "object",
+      "properties": {
+        "question_id": {
+          "description": "The question in this exercise to show when this transition is triggered. Can be `null`, which ends this exercise and does not trigger transitions for correct and incorrect.",
+          "type": ["number", "null"],
+          "$ref": "#/definitions/identifier"
+        }
+      }
+    },
     "answer": {
       "type": "object",
       "properties": {
@@ -147,6 +159,10 @@
         "correct": {
           "description": "Whether a match to this answer should be interpreted as correct, or incorrect",
           "type": "boolean"
+        },
+        "question_transition": {
+          "description": "The question in this exercise to show when the user triggers this answer. Only relevant for `conditional` type questions. If no transition is defined the default behaviour is followed.",
+          "$ref": "#/definitions/question_transition"
         },
         "rule_definition": {
           "description": "The definition of how the answer given by the student should be interpreted by the system",
