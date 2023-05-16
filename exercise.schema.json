@@ -54,13 +54,13 @@
           "description": "The feedback to show when the user provides an incorrect answer without specific feedback",
           "$ref": "#/definitions/i18n_rich_content"
         },
-        "correct_question_transition_id": {
-          "description": "The question in this exercise to show when the user provides a correct answer. Only relevant for `conditional` type questions",
-          "$ref": "#/definitions/identifier"
+        "correct_question_transition": {
+          "description": "The transition for when the user provides a correct answer. Only relevant for `conditional` type questions",
+          "$ref": "#/definitions/question_transition"
         },
-        "incorrect_question_transition_id": {
-          "description": "The question in this exercise to show when the user provides an incorrect answer. Only relevant for `conditional` type questions",
-          "$ref": "#/definitions/identifier"
+        "incorrect_question_transition": {
+          "description": "The transition for when the user provides an incorrect answer. Only relevant for `conditional` type questions",
+          "$ref": "#/definitions/question_transition"
         },
         "weight": {
           "description": "The weight this question has in the calculation of the overall score for the exercise",
@@ -125,6 +125,18 @@
       },
       "required": []
     },
+    "question_transition": {
+      "type": "object",
+      "properties": {
+        "question_id": {
+          "description": "The question in this exercise to show when this transition is triggered. Can be `null`, which ends this exercise and does not trigger transitions for correct and incorrect.",
+          "anyOf": [
+            {"$ref": "#/definitions/identifier"},
+            {"type": "null"}
+          ]
+        }
+      }
+    },
     "answer": {
       "type": "object",
       "properties": {
@@ -147,6 +159,10 @@
         "correct": {
           "description": "Whether a match to this answer should be interpreted as correct, or incorrect",
           "type": "boolean"
+        },
+        "question_transition": {
+          "description": "The question in this exercise to show when the user triggers this answer. Only relevant for `conditional` type questions. If no transition is defined the default behaviour is followed.",
+          "$ref": "#/definitions/question_transition"
         },
         "rule_definition": {
           "description": "The definition of how the answer given by the student should be interpreted by the system",
