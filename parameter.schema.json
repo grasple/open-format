@@ -30,7 +30,7 @@
         {"allOf": [{"$ref": "#/definitions/interval"}, {"properties": {"type": {"const": "interval"}}}]},
         {"allOf": [{"$ref": "#/definitions/inverse"}, {"properties": {"type": {"const": "inverse"}}}]},
         {"allOf": [{"$ref": "#/definitions/length"}, {"properties": {"type": {"const": "length"}}}]},
-        {"allOf": [{"$ref": "#/definitions/limit"}, {"properties": {"type": {"const": "limit"}}}]},
+        {"allOf": [{"$ref": "#/definitions/left_hand_side"}, {"properties": {"type": {"const": "left_hand_side"}}}]},
         {"allOf": [{"$ref": "#/definitions/limit"}, {"properties": {"type": {"const": "limit"}}}]},
         {"allOf": [{"$ref": "#/definitions/matrix_columnspace"}, {"properties": {"type": {"const": "matrix_columnspace"}}}]},
         {"allOf": [{"$ref": "#/definitions/matrix_determinant"}, {"properties": {"type": {"const": "matrix_determinant"}}}]},
@@ -48,13 +48,16 @@
         {"allOf": [{"$ref": "#/definitions/mode"}, {"properties": {"type": {"const": "mode"}}}]},
         {"allOf": [{"$ref": "#/definitions/plot_2d"}, {"properties": {"type": {"const": "plot_2d"}}}]},
         {"allOf": [{"$ref": "#/definitions/probability_distribution_function"}, {"properties": {"type": {"const": "probability_distribution_function"}}}]},
+        {"allOf": [{"$ref": "#/definitions/product"}, {"properties": {"type": {"const": "product"}}}]},
         {"allOf": [{"$ref": "#/definitions/quantile"}, {"properties": {"type": {"const": "quantile"}}}]},
         {"allOf": [{"$ref": "#/definitions/read_decimal_with_base"}, {"properties": {"type": {"const": "read_decimal_with_base"}}}]},
         {"allOf": [{"$ref": "#/definitions/read_expression_with_mixed_numbers"}, {"properties": {"type": {"const": "read_expression_with_mixed_numbers"}}}]},
         {"allOf": [{"$ref": "#/definitions/real_part"}, {"properties": {"type": {"const": "real_part"}}}]},
+        {"allOf": [{"$ref": "#/definitions/right_hand_side"}, {"properties": {"type": {"const": "right_hand_side"}}}]},
         {"allOf": [{"$ref": "#/definitions/row_reduced_echelon_form"}, {"properties": {"type": {"const": "row_reduced_echelon_form"}}}]},
         {"allOf": [{"$ref": "#/definitions/select"}, {"properties": {"type": {"const": "select"}}}]},
         {"allOf": [{"$ref": "#/definitions/substitute"}, {"properties": {"type": {"const": "substitute"}}}]},
+        {"allOf": [{"$ref": "#/definitions/sum"}, {"properties": {"type": {"const": "sum"}}}]},
         {"allOf": [{"$ref": "#/definitions/unique"}, {"properties": {"type": {"const": "unique"}}}]},
         {"allOf": [{"$ref": "#/definitions/variance"}, {"properties": {"type": {"const": "variance"}}}]}
       ]
@@ -288,6 +291,9 @@
     "length": {
       "$ref": "#/definitions/value_parameter"
     },
+    "left_hand_side": {
+      "$ref": "#/definitions/value_parameter"
+    },
     "limit": {
       "type": "object",
       "properties": {
@@ -411,6 +417,28 @@
       },
       "required": ["distribution", "x"]
     },
+    "product": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "The formula to apply the product to",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "index": {
+          "description": "The symbol used for the index",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "lower_bound": {
+          "description": "The initial integer value for the index",
+          "type": "integer"
+        },
+        "upper_bound": {
+          "description": "The final integer value for the index",
+          "type": "integer"
+        }
+      },
+      "required": ["value", "index", "lower_bound", "upper_bound"]
+    },
     "quantile": {
       "type": "object",
       "properties": {
@@ -489,6 +517,9 @@
     "real_part": {
       "$ref": "#/definitions/value_parameter"
     },
+    "right_hand_side": {
+      "$ref": "#/definitions/value_parameter"
+    },
     "row_reduced_echelon_form": {
       "$ref": "#/definitions/value_parameter"
     },
@@ -539,6 +570,28 @@
         }
       },
       "required": ["value", "first_index"]
+    },
+    "sum": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "The formula to apply the sum to",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "index": {
+          "description": "The symbol used for the index",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "lower_bound": {
+          "description": "The initial integer value for the index",
+          "type": "integer"
+        },
+        "upper_bound": {
+          "description": "The final integer value for the index",
+          "type": "integer"
+        }
+      },
+      "required": ["value", "index", "lower_bound", "upper_bound"]
     },
     "unique": {
       "$ref": "#/definitions/value_parameter"
