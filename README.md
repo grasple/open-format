@@ -12,7 +12,7 @@ You can use this format to write transformer scripts so that you can take a Gras
 
 It might well be that you run into issues where the features of these applications do not perfectly overlap. If you run into such issues, please let us know. This format is an attempt to make it easier to import and export learning resources between applications, to stimulate interoperability between educational applications. 
 
-#### Do be aware! For now this is an experimental format, v0.0.1, so please be aware that things can and will change! 
+#### Do be aware! For now this is an experimental format, v0.0.2, so please be aware that things can and will change! 
 
 ## Where to start?
 
@@ -22,7 +22,7 @@ The first version of the format is defined using the [JSON Schema vocabulary](ht
 - [parameter.schema.json](./parameter.schema.json): a schema to define different types of parameters
 - [content-types.schema.json](./content-types.schema.json): common definitions of types used in the other two schemas. 
 
-#### Note: the current version of the format is `v0.0.1` and is published to sollicit feedback from the community. Please keep in mind that this format can (and most likely will) change in the future.
+#### Note: the current version of the format is `v0.0.2` and is published to sollicit feedback from the community. Please keep in mind that this format can (and most likely will) change in the future.
 
 If you want you can look at some example exercises that are exported using the format described in the json schema's.
 [Find the example exercises here](https://github.com/grasple/open-format-schemas/tree/main/examples)

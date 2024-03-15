@@ -13,16 +13,13 @@
     },
     "i18n_rich_content": {
       "description": "Content specified per language",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": {"type": "string"},
-        "patternProperties": {
-          "^.*$": {
-            "type": "string",
-            "description": "The language this content is in, specified as a IETF BCP 47 language tag",
-            "value": {"$ref": "#/definitions/rich_content"}
-          }
+      "type": "object",
+      "additionalProperties": {"type": "string"},
+      "patternProperties": {
+        "^.*$": {
+          "type": "string",
+          "description": "The language this content is in, specified as a IETF BCP 47 language tag",
+          "value": {"$ref": "#/definitions/rich_content"}
         }
       }
     },

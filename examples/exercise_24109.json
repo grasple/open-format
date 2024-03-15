@@ -44,23 +44,15 @@
                }
             }
          ],
-         "description" : [
-            {
-               "en" : "<p>\\(f\\left(x\\right)=5x^2+6\\)<br></p>"
-            },
-            {
-               "nl" : "<p>\\(f\\left(x\\right)=5x^2+6\\)<br></p>"
-            }
-         ],
+         "description" : {
+           "en" : "<p>\\(f\\left(x\\right)=5x^2+6\\)<br></p>",
+           "nl" : "<p>\\(f\\left(x\\right)=5x^2+6\\)<br></p>"
+         },
          "id" : 24109,
-         "question" : [
-            {
-               "en" : "<p>What is \\(\\frac{d}{dx}f\\left(x\\right)\\) ?<br></p>"
-            },
-            {
-               "nl" : "<p>Bereken&nbsp;\\(\\frac{d}{dx}f\\left(x\\right)\\)<br></p>"
-            }
-         ],
+         "question" : {
+           "en" : "<p>What is \\(\\frac{d}{dx}f\\left(x\\right)\\) ?<br></p>",
+           "nl" : "<p>Bereken&nbsp;\\(\\frac{d}{dx}f\\left(x\\right)\\)<br></p>"
+         },
          "type" : "open-math",
          "weight" : 1
       }
