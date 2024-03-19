@@ -44,23 +44,15 @@
                }
             }
          ],
-         "description" : [
-            {
-               "en" : "<p>\\(f\\left(x\\right)=[!fx!]\\)<br></p>"
-            },
-            {
-               "nl" : "<p>\\(f\\left(x\\right)=[!fx!]\\)<br></p>"
-            }
-         ],
+         "description" : {
+           "en": "<p>\\(f\\left(x\\right)=[!fx!]\\)<br></p>",
+           "nl": "<p>\\(f\\left(x\\right)=[!fx!]\\)<br></p>"
+         },
          "id" : 24108,
-         "question" : [
-            {
-               "en" : "<p>What is \\(\\frac{d}{dx}f\\left(x\\right)\\) ?<br></p>"
-            },
-            {
-               "nl" : "<p>Bereken&nbsp;\\(\\frac{d}{dx}f\\left(x\\right)\\)</p>"
-            }
-         ],
+         "question" : {
+           "en" : "<p>What is \\(\\frac{d}{dx}f\\left(x\\right)\\) ?<br></p>",
+           "nl" : "<p>Bereken&nbsp;\\(\\frac{d}{dx}f\\left(x\\right)\\)</p>"
+         },
          "type" : "open-math",
          "weight" : 1
       }
@@ -83,7 +75,7 @@
          {
             "definition" : {
                "max" : 10,
-               "min" : "2",
+               "min" : 2,
                "step" : 1,
                "type" : "range"
             },
@@ -92,8 +84,8 @@
          },
          {
             "definition" : {
-               "max" : "6",
-               "min" : "2",
+               "max" : 6,
+               "min" : 2,
                "step" : 1,
                "type" : "range"
             },
@@ -103,7 +95,7 @@
          {
             "definition" : {
                "max" : 10,
-               "min" : "3",
+               "min" : 3,
                "step" : 1,
                "type" : "range"
             },
