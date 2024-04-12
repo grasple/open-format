@@ -88,12 +88,12 @@
         "max_attempts": {
           "description": "The number of attempts a user has for answering the question correctly",
           "type": "number",
-          "default": 3
+          "default": 2
         },
         "attempt_settings": {
           "description": "Settings which apply to a specific attempt. The settings for the first attempt are specified in the object under the key '1'. If no specific settings are given for an attempt the value will be the default of the property",
           "type": "object",
-          "patternProperties" : {
+          "patternProperties": {
             "^[1-9]$": {
               "percentage_of_full_points": {
                 "description": "The percentage with which the maximum number of points for this question is multiplied if the user answers the question correctly in this attempt",
@@ -102,9 +102,25 @@
               }
             }
           },
-          "default": [
-            { "1": { "percentage_of_full_points": 100 }}
-          ]
+          "if": {
+            "properties": {
+              "question_type": {
+                "description": "Note: this is the type of the question containing these settings",
+                "const": "mc"
+              }
+            }
+          },
+          "then": {
+            "default": {
+              "1": { "percentage_of_full_points": 100 }
+            }
+          },
+          "else": {
+            "default": {
+              "1": {"percentage_of_full_points": 100},
+              "2": { "percentage_of_full_points": 50}
+            }
+          }
         },
         "feedback_at_incorrect_end_state": {
           "description": "The type of feedback which should be shown when the user has used `max_attempts` without a correct answer. This can either be the feedback for the given answer, or both the correct answer and the contents of the `feedback_correct` field ('correct_answer_and_detailed_solution')",
