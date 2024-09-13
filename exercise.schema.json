@@ -234,7 +234,7 @@
           "type": "boolean"
         },
         "accuracy": {
-          "description": "The accurate of the 'text_equals' and 'number_equals' checks. Number between 0 and 100",
+          "description": "The accuracy of the 'text_equals' and 'number_equals' checks. Number between 0 and 100",
           "type": "number"
         }
       },
@@ -282,6 +282,29 @@
             {"$ref": "./parameter.schema.json#/definitions/generators"},
             {"$ref": "./parameter.schema.json#/definitions/transformers"}
           ]
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "description": "The type of the conditional operator, which is applied to compare the numeric value of the parameter with a given value. If the equation does not hold the value should not be accepted. Note: conditions are only applied to parameter which result in a numeric value (integer or float), otherwise the conditions are ignored.",
+                "type": "object",
+                "enum": [
+                  { "display_name": "<", "name": "lt"},
+                  { "display_name": ">", "name": "gt"},
+                  { "display_name": "<=", "name": "le"},
+                  { "display_name": ">=", "name": "ge"},
+                  { "display_name": "!=", "name": "ne"}
+                ]
+              },
+              "value": {
+                "description": "The value to compare the parameter value to, should be an integer or a float",
+                "type": "string"
+              }
+            }
+          }
         },
         "data_files": {
           "type": "array",
