@@ -17,6 +17,7 @@
     "transformers": {
       "description": "All parameters which transform an input to an output",
       "oneOf": [
+        {"allOf": [{"$ref": "#/definitions/argument"}, {"properties": {"type": {"const": "argument"}}}]},
         {"allOf": [{"$ref": "#/definitions/cumulative_distribution_function"}, {"properties": {"type": {"const": "cumulative_distribution_function"}}}]},
         {"allOf": [{"$ref": "#/definitions/dataset_correlation"}, {"properties": {"type": {"const": "dataset_correlation"}}}]},
         {"allOf": [{"$ref": "#/definitions/dataset_linear_regression_ols"}, {"properties": {"type": {"const": "dataset_linear_regression_ols"}}}]},
@@ -79,6 +80,10 @@
         "type": {"const": "answer_rule_definition"}
       },
       "required": ["rule_definition"]
+    },
+    "argument": {
+      "description": "Calculates the argument of a complex number (see https://en.wikipedia.org/wiki/Argument_(complex_analysis))",
+      "$ref": "#/definitions/value_parameter"
     },
     "cumulative_distribution_function": {
       "type": "object",
