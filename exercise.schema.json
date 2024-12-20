@@ -76,11 +76,30 @@
         "settings": {
           "description": "Settings which influence the way the question is to be consumed by the player",
           "$ref": "#/definitions/question_settings"
+        },
+        "multi_answer_settings" : {
+          "description": "Settings which influence the way the answers are to be handled by the player",
+          "$ref": "#/definitions/question_multi_answer_settings"
         }
       },
-      "required": [
-        "id", "type", "question", "answers"
-      ]
+      "if": {
+        "properties": {
+          "type": {
+            "description": "Note: this is the type of the question",
+            "const": "mc"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id", "type", "question", "answers", "multi_answer_settings"
+        ]
+      },
+      "else": {
+        "required": [
+          "id", "type", "question", "answers"
+        ]
+      }
     },
     "question_settings" : {
       "type": "object",
@@ -137,6 +156,72 @@
         }
       },
       "required": []
+    },
+    "question_multi_answer_settings" : {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Whether multiple answers are to be given by the student. If 'true' all answers marked as correct (and only those marked as correct) need to be selected for the question to be answered correctly.",
+          "type": "boolean",
+          "default": false
+        },
+        "scoring_algorithm": {
+          "description": "Object describing the scoring algorithm to be used in calculating the score when enabled = 'true'",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "The name of the scoring algorithm to use. For the scoring, all answers have a status of 'C' if they are selected and a correct answer, or if they are not selected and an incorrect answer. Otherwise they have a status of 'IC'. Let #IC be the number of selected answers with status 'IC', and '#answers' be the number of answers. The scores for each algorithm are: 'only_all_correct' = 100% if '#IC' == 0 else 0, 'points_per_correct' = 100 - #IC * (#answers / 100), 'penalty_per_incorrect' = max(0, 100 - #IC * 'penalty (from parameters)').",
+              "type": "string",
+              "enum": ["only_all_correct", "points_per_correct", "penalty_per_incorrect"]
+            },
+            "parameters": {
+              "description": "Parameters for different scoring algorithms",
+              "type": "object",
+              "properties": {
+                "penalty": {
+                  "description": "The amount of percentage points to subtract for each incorrectly selected answer option (between 0 and 100)",
+                  "type": "number"
+                }
+              },
+              "required": ["penalty"]
+            }
+          },
+          "if": {
+            "properties": {
+              "name": {
+                "const": "penalty_per_incorrect"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "name", "parameters"
+            ]
+          },
+          "else": {
+            "required": [
+              "name"
+            ]
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "enabled": {
+            "const": "true"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "enabled", "scoring_algorithm"
+        ]
+      },
+      "else": {
+        "required": [
+          "enabled"
+        ]
+      }
     },
     "question_transition": {
       "type": "object",
