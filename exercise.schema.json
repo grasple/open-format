@@ -43,6 +43,10 @@
           "description": "The question the student needs to answer",
           "$ref": "#/definitions/i18n_rich_content"
         },
+        "answer_input_template": {
+          "description": "The template with input fields in which the student has to provide the answers",
+          "$ref": "#/definitions/i18n_rich_content"
+        },
         "feedback_correct": {
           "description": "The feedback to show when the user provides a correct answer without specific feedback",
           "$ref": "#/definitions/i18n_rich_content"
