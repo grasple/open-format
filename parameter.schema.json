@@ -367,24 +367,15 @@
     "plot_2d": {
       "type": "object",
       "properties": {
-        "lines": {
+        "items": {
           "type": "array",
           "items": {
             "type": "object",
-            "properties": {
-              "value": {
-                "description": "Value to plot",
-                "$ref": "./content-types.schema.json#/definitions/latex_expression"
-              },
-              "color": {
-                "description": "Color of the line to plot in hexadecimal format",
-                "type": "string"
-              },
-              "label": {
-                "description": "label to show in the legend for this line",
-                "$ref": "./content-types.schema.json#/definitions/latex_expression"
-              }
-            }
+            "anyOf": [
+              {"$ref": "#/definitions/plot_2d_item_line"},
+              {"$ref": "#/definitions/plot_2d_item_point"},
+              {"$ref": "#/definitions/plot_2d_item_parametric_line"}
+            ]
           }
         },
         "x_min": {
@@ -395,6 +386,10 @@
           "description": "The maximum value of the x-axes, default 10",
           "type": "integer"
         },
+        "x_ticks": {
+          "description": "The ticks to use on the x-axes as a latex expression. This can either be a single number, or a list of values. The list of values will be interpreted as is, while a single value is interpreted as the steps between x_min and x_max",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
         "y_min": {
           "description": "The minimum value of the y-axes, default -10",
           "type": "integer"
@@ -402,6 +397,10 @@
         "y_max": {
           "description": "The maximum value of the y-axes, default 10",
           "type": "integer"
+        },
+        "y_ticks": {
+          "description": "The ticks to use on the y-axes as a latex expression. This can either be a single number, or a list of values. The list of values will be interpreted as is, while a single value is interpreted as the steps between y_min and y_max",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
         },
         "x_label": {
           "description": "The label to show on the x-axes",
@@ -414,11 +413,137 @@
         "hide_legend": {
           "description": "If true, the legend should not be shown in the generated image",
           "type": "boolean"
+        },
+        "hide_x_axis": {
+          "description": "If true, the x-axes should not be shown in the generated image",
+          "type": "boolean"
+        },
+        "hide_y_axis": {
+          "description": "If true, the y-axes should not be shown in the generated image",
+          "type": "boolean"
+        },
+        "hide_grid": {
+          "description": "If true, the grid should not be shown in the generated image",
+          "type": "boolean"
+        },
+        "hide_origin_lines": {
+          "description": "If true, the origin lines should not be shown in the generated image",
+          "type": "boolean"
         }
       },
       "required": [
         "lines"
       ]
+    },
+    "plot_2d_item_line": {
+      "description": "An item representing a line in a 2d plot",
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": ["plain_line"]
+        },
+        "value": {
+          "description": "Value to plot, this can either be an formula or a list of points to plot",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "color": {
+          "description": "Color of the line to plot in hexadecimal format",
+          "type": "string"
+        },
+        "line_style": {
+          "description": "The style of the line",
+          "enum": ["solid", "dotted", "dashed", "dashdot", " "],
+          "default": "solid"
+        },
+        "marker_style": {
+          "description": "The style of the marker (representing no marker, point, pixel, triangle down / up / left / right, start, and square)",
+          "enum": ["", "o", ".", "v", "^", "<", ">", "*", "s"],
+          "default": ""
+        },
+        "label": {
+          "description": "Label to show in the legend for this line",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression",
+          "default": "The expression of the formula"
+        },
+        "hide_from_legend": {
+          "description": "Indicates whether label should be added to the legend",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": ["value", "color"]
+    },
+    "plot_2d_item_point": {
+      "description": "An item representing a point in a 2d plot",
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": ["point"]
+        },
+        "x": {
+          "description": "The x-coordinate of the point to plot",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "y": {
+          "description": "The y-coordinate of the point to plot",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "color": {
+          "description": "Color of the point to plot in hexadecimal format",
+          "type": "string"
+        },
+        "marker_style": {
+          "description": "The style of the marker (representing no marker, point, pixel, triangle down / up / left / right, start, and square)",
+          "enum": ["", "o", ".", "v", "^", "<", ">", "*", "s"],
+          "default": "o"
+        },
+        "label": {
+          "description": "Label to show in the legend for this point",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression",
+          "default": ""
+        }
+      },
+      "required": ["x", "y", "color", "marker_style"]
+    },
+    "plot_2d_item_parametric line": {
+      "description": "An item representing a parametric line in a 2d plot",
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": ["parametric_line"]
+        },
+        "x": {
+          "description": "The formula for the x value of the parametric line",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "y": {
+          "description": "The formula for the y value of the parametric line",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "range_start": {
+          "description": "The start of the range for which the formulas need to be calculated",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "range_end": {
+          "description": "The end of the range for which the formulas need to be calculated",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression"
+        },
+        "color": {
+          "description": "Color of the line to plot in hexadecimal format",
+          "type": "string"
+        },
+        "line_style": {
+          "description": "The style of the line",
+          "enum": ["solid", "dotted", "dashed", "dashdot", " "],
+          "default": "solid"
+        },
+        "label": {
+          "description": "Label to show in the legend for this parametric line",
+          "$ref": "./content-types.schema.json#/definitions/latex_expression",
+          "default": ""
+        }
+      },
+      "required": ["x", "y", "range_start", "range_end", "color"]
     },
     "probability_distribution_function": {
       "type": "object",
