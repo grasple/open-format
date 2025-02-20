@@ -11,6 +11,11 @@
       "type": "string",
       "format": "html"
     },
+    "rich_content_answer_fields": {
+      "description": "The content of a field specified in HTML. It is a superset of 'rich_content' with the added option of being able to answer answer fields. Answer fields can be added by using `<answer-field ref=\"<answer_field_parameter_reference>\"/>`, where the 'answer_field_parameter_reference' is the 'parameter_reference' property of the answer_field object. Answer fields can have an optional class 'inline-grow' which stretches the answer-field to full screen when possible (using `flex-grow: 1` in css).",
+      "type": "string",
+      "format": "html"
+    },
     "i18n_rich_content": {
       "description": "Content specified per language",
       "type": "object",
@@ -20,6 +25,18 @@
           "type": "string",
           "description": "The language this content is in, specified as a IETF BCP 47 language tag",
           "value": {"$ref": "#/definitions/rich_content"}
+        }
+      }
+    },
+    "i18n_rich_content_answer_fields": {
+      "description": "Rich content with answer fields specified per language",
+      "type": "object",
+      "additionalProperties": {"type": "string"},
+      "patternProperties": {
+        "^.*$": {
+          "type": "string",
+          "description": "The language this content is in, specified as a IETF BCP 47 language tag",
+          "value": {"$ref": "#/definitions/rich_content_answer_fields"}
         }
       }
     },
@@ -42,6 +59,10 @@
         "question": {
           "description": "The question the student needs to answer",
           "$ref": "#/definitions/i18n_rich_content"
+        },
+        "answer_input_template": {
+          "description": "The template with input fields in which the student has to provide the answers",
+          "$ref": "#/definitions/i18n_rich_content_answer_fields"
         },
         "feedback_correct": {
           "description": "The feedback to show when the user provides a correct answer without specific feedback",
