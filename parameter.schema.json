@@ -59,6 +59,8 @@
         {"allOf": [{"$ref": "#/definitions/select"}, {"properties": {"type": {"const": "select"}}}]},
         {"allOf": [{"$ref": "#/definitions/substitute"}, {"properties": {"type": {"const": "substitute"}}}]},
         {"allOf": [{"$ref": "#/definitions/sum"}, {"properties": {"type": {"const": "sum"}}}]},
+        {"allOf": [{"$ref": "#/definitions/unit_expression_value"}, {"properties": {"type": {"const": "unit_expression_value"}}}]},
+        {"allOf": [{"$ref": "#/definitions/unit_expression_precision"}, {"properties": {"type": {"const": "unit_expression_precision"}}}]},
         {"allOf": [{"$ref": "#/definitions/unique"}, {"properties": {"type": {"const": "unique"}}}]},
         {"allOf": [{"$ref": "#/definitions/variance"}, {"properties": {"type": {"const": "variance"}}}]}
       ]
@@ -734,6 +736,12 @@
         }
       },
       "required": ["value", "index", "lower_bound", "upper_bound"]
+    },
+    "unit_expression_value": {
+      "$ref": "#/definitions/value_parameter"
+    },
+    "unit_expression_precision": {
+      "$ref": "#/definitions/value_parameter"
     },
     "unique": {
       "$ref": "#/definitions/value_parameter"
