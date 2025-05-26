@@ -50,7 +50,7 @@
         "type": {
           "description": "The type of the question",
           "type": "string",
-          "enum": ["mc", "open-text", "open-number", "open-math"]
+          "enum": ["mc", "open-text", "open-number", "open-math", "open-unit"]
         },
         "description": {
           "description": "An introduction to the question to question to show to the student",
@@ -303,6 +303,16 @@
         "parameter_reference": {
           "description": "The reference of this parameter which can be used within rich_content or parameter_definitions to refer to the value of this answer field",
           "type": "string"
+        },
+        "options": {
+          "description": "A set of (display) options to apply to the answer fields",
+          "type": "object",
+          "properties": {
+            "separate_unit_answer_field": {
+              "description": "Indicates that the answer_field should be displayed as a unit input with two distinct inputs, one for the value and one for the input",
+              "type": "boolean"
+            }
+          }
         }
       },
       "required": [
@@ -344,7 +354,11 @@
             "solution_soe",
             "greater_than", "less_than", "greater_than_or_equal", "less_than_or_equal",
             "is_numerical", "matrix_is_diagonal", "defined",
-            "text_equals", "number_equals"
+            "text_equals", "number_equals",
+            "is_equivalent_unit_expression", "is_exact_same_unit_expression",
+            "is_a_unit_expression_with_precision", "is_a_unit_expression_with_equivalent_value",
+            "is_a_unit_expression_with_exact_value", "is_a_unit_expression_with_equivalent_quantity",
+            "is_a_unit_expression_with_exact_quantity", "is_a_unit_expression_which_defines_quantity"
           ]
         },
         "rhs": {
