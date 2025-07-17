@@ -358,7 +358,8 @@
             "is_equivalent_unit_expression", "is_exact_same_unit_expression",
             "is_a_unit_expression_with_precision", "is_a_unit_expression_with_equivalent_value",
             "is_a_unit_expression_with_exact_value", "is_a_unit_expression_with_equivalent_quantity",
-            "is_a_unit_expression_with_exact_quantity", "is_a_unit_expression_which_defines_quantity"
+            "is_a_unit_expression_with_exact_quantity", "is_a_unit_expression_which_defines_quantity",
+            "is_a_unit_expression_with_equivalent_value_and_quantity", "is_a_unit_expression_with_exact_value_and_quantity"
           ]
         },
         "rhs": {
